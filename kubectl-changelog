@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+version() {
+    kubectl version --short --client | grep -Po '(?<=Client Version: v)(?<Major>0|[1-9]\d*)\.(?<Minor>0|[1-9]\d*)'
+}
+
+changelog() {
+    curl -s "https://raw.githubusercontent.com/kubernetes/kubernetes/master/CHANGELOG-$(version).md" | less
+}
+
+case "$1" in
+	*)
+		changelog
+		;;
+esac
